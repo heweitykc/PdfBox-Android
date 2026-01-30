@@ -12,8 +12,7 @@ android {
     compileSdkVersion 36
     compileOptions.encoding = 'UTF-8'
 
-    defaultConfig {
-        minSdkVersion 24        
+    defaultConfig {        
         consumerProguardFiles 'consumer-proguard-rules.txt'
     }
 
