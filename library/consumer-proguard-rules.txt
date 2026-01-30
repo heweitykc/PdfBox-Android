@@ -3,4 +3,13 @@
    public <init>(...);
 }
 
- -keep,allowobfuscation class com.tom_roush.pdfbox.pdmodel.documentinterchange.** { *; }
+-keep,allowobfuscation class com.tom_roush.pdfbox.pdmodel.documentinterchange.** { *; }
+
+# ------------------------------------------------------------------------------
+# 仅使用「PDF 加密」(load + protect + save) 或「纯图片生成 PDF」时：
+# - 不需要字体资源：加密只操作结构/流，不解析字形；不在应用里放 assets 中的
+#   fontbox/pdfbox 字体相关资源即可减小体积。
+# - 不必初始化 PDFBoxResourceLoader，除非你还做渲染或文字提取。
+# - R8/ProGuard 会自然剪枝未引用代码；不要对 font/rendering 包做 -keep，
+#   以便未使用的渲染/字体逻辑被移除。
+# ------------------------------------------------------------------------------

@@ -26,6 +26,15 @@ PDFBoxResourceLoader.init(getApplicationContext());
 
 An example app is located in the `sample` directory and includes examples of common tasks.
 
+Slim usage (encryption / image-only PDF)
+-------------
+
+If your app **only** uses PDF password encryption (`PDDocument.load` → `protect` → `save`) and/or **image-only** PDF creation (no text drawing), you can reduce size and avoid font dependencies:
+
+* **Encryption** works at the document structure/stream level; it does not parse or render text, so it does **not** require font resources or `PDFBoxResourceLoader.init()`.
+* You can **omit** the font-related assets (e.g. `fontbox/resources/cmap`, `pdfbox/resources/afm`, `glyphlist`, `ttf`, etc.) from your build if you never render PDFs or extract text.
+* Do **not** add ProGuard/R8 `-keep` rules for font or rendering packages; let R8 tree-shake unused code. See `library/consumer-proguard-rules.txt` for details.
+
 Optional Dependencies
 ==============
 

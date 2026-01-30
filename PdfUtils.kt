@@ -597,23 +597,19 @@ object PdfUtils {
         return JPEGFactory.createFromImage(document, bitmap)
     }
 
+    /**
+     * 使用 PDF 标准密码加密（RC4/128），加密后的 PDF 可用任意阅读器（系统、Adobe 等）输入密码打开。
+     */
     suspend fun lock(file: File, password: String): File? = withContext(Dispatchers.IO) {
         var document: PDDocument? = null
         try {
-
-            val document = PDDocument.load(file)
-
+            document = PDDocument.load(file)
             val ap = AccessPermission()
-            // 创建保护策略，只设置用户密码
             val spp = StandardProtectionPolicy("", password, ap)
-            // 设置加密参数
-            spp.encryptionKeyLength = 128 // 使用 128 位密钥
+            spp.encryptionKeyLength = 128
             spp.permissions = ap
-            // 应用保护策略
             document.protect(spp)
-
             val cacheFile = FileUtils.createCacheFile(file.name)
-
             document.save(cacheFile)
             return@withContext cacheFile
         } catch (e: Exception) {
