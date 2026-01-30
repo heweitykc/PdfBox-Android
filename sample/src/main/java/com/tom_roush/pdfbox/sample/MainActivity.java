@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +40,6 @@ import com.tom_roush.pdfbox.rendering.ImageType;
 import com.tom_roush.pdfbox.rendering.PDFRenderer;
 import com.tom_roush.pdfbox.text.PDFTextStripper;
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class MainActivity extends Activity {
     File root;
@@ -271,8 +268,6 @@ public class MainActivity extends Activity {
         // Setups up the encryption parameters
         spp.setEncryptionKeyLength(keyLength);
         spp.setPermissions(ap);
-        BouncyCastleProvider provider = new BouncyCastleProvider();
-        Security.addProvider(provider);
 
         PDFont font = PDType1Font.HELVETICA;
         PDDocument document = new PDDocument();

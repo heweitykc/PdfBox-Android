@@ -49,10 +49,7 @@ public final class SecurityHandlerFactory
         registerHandler(StandardSecurityHandler.FILTER,
             StandardSecurityHandler.class,
             StandardProtectionPolicy.class);
-
-        registerHandler(PublicKeySecurityHandler.FILTER,
-            PublicKeySecurityHandler.class,
-            PublicKeyProtectionPolicy.class);
+        // PublicKey security handler removed (required Bouncy Castle)
     }
 
     /**
