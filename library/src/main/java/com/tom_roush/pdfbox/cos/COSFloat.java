@@ -149,6 +149,7 @@ public class COSFloat extends COSNumber
      *
      * @deprecated will be removed in a future release
      */
+    @Deprecated
     @Override
     public double doubleValue()
     {

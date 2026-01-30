@@ -68,6 +68,7 @@ public final class Matrix implements Cloneable
      *
      * @deprecated use {@link Matrix#createMatrix(COSBase)} instead
      */
+    @Deprecated
     public Matrix(COSArray array)
     {
         single = new float[SIZE];

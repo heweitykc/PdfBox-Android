@@ -1526,6 +1526,7 @@ public final class PDPageContentStream implements Closeable
      * @throws IllegalArgumentException If the parameter is invalid.
      * @deprecated use {@link #setNonStrokingColor(float) setNonStrokingColor(g/255f)}
      */
+    @Deprecated
     public void setNonStrokingColor(int g) throws IOException
     {
         if (isOutside255Interval(g))

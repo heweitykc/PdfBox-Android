@@ -23,7 +23,6 @@ import com.tom_roush.pdfbox.cos.COSDictionary;
 import com.tom_roush.pdfbox.cos.COSName;
 import com.tom_roush.pdfbox.pdmodel.documentinterchange.taggedpdf.PDArtifactMarkedContent;
 import com.tom_roush.pdfbox.pdmodel.graphics.PDXObject;
-import com.tom_roush.pdfbox.text.TextPosition;
 
 /**
  * A marked content.
@@ -147,7 +146,7 @@ public class PDMarkedContent
     /**
      * Gets the contents of the marked content sequence. Can be
      * <ul>
-     *   <li>{@link TextPosition},</li>
+     *   <li>text position (Object),</li>
      *   <li>{@link PDMarkedContent}, or</li>
      *   <li>{@link PDXObject}.</li>
      * </ul>
@@ -162,9 +161,9 @@ public class PDMarkedContent
     /**
      * Adds a text position to the contents.
      *
-     * @param text the text position
+     * @param text the text position (Object)
      */
-    public void addText(TextPosition text)
+    public void addText(Object text)
     {
         this.getContents().add(text);
     }

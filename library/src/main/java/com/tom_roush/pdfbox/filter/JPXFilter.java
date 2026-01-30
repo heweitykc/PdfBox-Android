@@ -26,8 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.gemalto.jp2.JP2Decoder;
-import com.gemalto.jp2.JP2Encoder;
 import com.tom_roush.pdfbox.cos.COSDictionary;
 import com.tom_roush.pdfbox.cos.COSName;
 import com.tom_roush.pdfbox.io.IOUtils;
@@ -93,60 +91,44 @@ public final class JPXFilter extends Filter
     // try to read using JP2ForAndroid
     private Bitmap readJPX(InputStream input, DecodeOptions options, DecodeResult result) throws IOException
     {
-        try
-        {
-            Class.forName("com.gemalto.jp2.JP2Decoder");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            throw new MissingImageReaderException("Cannot read JPX image: JP2Android is not installed.");
-        }
-
-        JP2Decoder decoder = new JP2Decoder(input);
-
-        // TODO: uncomment after upgrading JP2ForAndroid
-        // decoder.setSourceRegion(options.getSourceRegion());
-
-        Bitmap image = decoder.decode();
-
-        COSDictionary parameters = result.getParameters();
-
-        // "If the image stream uses the JPXDecode filter, this entry is optional
-        // and shall be ignored if present"
-        //
-        // note that indexed color spaces make the BPC logic tricky, see PDFBOX-2204
-//        int bpc = image.getColorModel().getPixelSize() / image.getRaster().getNumBands();
-//        parameters.setInt(COSName.BITS_PER_COMPONENT, bpc); TODO: PdfBox-Android
-
-        // "Decode shall be ignored, except in the case where the image is treated as a mask"
-        if (!parameters.getBoolean(COSName.IMAGE_MASK, false))
-        {
-            parameters.setItem(COSName.DECODE, null);
-        }
-
-        // override dimensions, see PDFBOX-1735
-        parameters.setInt(COSName.WIDTH, image.getWidth());
-        parameters.setInt(COSName.HEIGHT, image.getHeight());
-
-        // extract embedded color space
-        if (!parameters.containsKey(COSName.COLORSPACE) && Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-        {
-            result.setColorSpace(new PDJPXColorSpace(image.getColorSpace()));
-        }
-
-        return image;
+        return null;
     }
 
     /**
      * {@inheritDoc}
+     * JPEG 2000 encoding requires optional dependency com.gemalto.jp2:jp2-android.
+     * If not on classpath, throws IOException.
      */
     @Override
     protected void encode(InputStream input, OutputStream encoded, COSDictionary parameters)
         throws IOException
     {
         Bitmap bitmap = BitmapFactory.decodeStream(input);
-        byte[] jpeBytes = new JP2Encoder(bitmap).encode();
-        IOUtils.copy(new ByteArrayInputStream(jpeBytes), encoded);
+        byte[] jp2Bytes = encodeBitmapToJP2(bitmap);
+        if (jp2Bytes == null) {
+            throw new IOException(
+                "JPEG 2000 encoding requires optional dependency com.gemalto.jp2:jp2-android. "
+                + "Add it to your project or avoid creating PDFs with JPX images.");
+        }
+        IOUtils.copy(new ByteArrayInputStream(jp2Bytes), encoded);
         encoded.flush();
+    }
+
+    /**
+     * Encodes bitmap to JP2 bytes using jp2-android JP2Encoder when available.
+     *
+     * @param bitmap the bitmap to encode
+     * @return JP2 bytes, or null if jp2-android is not on classpath
+     */
+    private static byte[] encodeBitmapToJP2(Bitmap bitmap)
+    {
+        try {
+            Class<?> encoderClass = Class.forName("com.gemalto.jp2.android.JP2Encoder");
+            Object encoder = encoderClass.getConstructor(Bitmap.class).newInstance(bitmap);
+            return (byte[]) encoderClass.getMethod("encode").invoke(encoder);
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 }

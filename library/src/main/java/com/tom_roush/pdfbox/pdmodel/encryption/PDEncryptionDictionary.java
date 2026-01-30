@@ -28,6 +28,7 @@ public class PDEncryptionDictionary extends PDEncryption
     /**
      * @deprecated Use {@link PDEncryption } instead
      */
+    @Deprecated
     public PDEncryptionDictionary()
     {
         super();
@@ -37,6 +38,7 @@ public class PDEncryptionDictionary extends PDEncryption
      * @deprecated Use {@link PDEncryption#PDEncryption(COSDictionary) } instead
      * @param dictionary a COS encryption dictionary
      */
+    @Deprecated
     public PDEncryptionDictionary(COSDictionary dictionary)
     {
         super(dictionary);

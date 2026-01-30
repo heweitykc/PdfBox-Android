@@ -807,6 +807,7 @@ public abstract class PDFStreamEngine
      *
      * @deprecated use {@link #showGlyph(Matrix, PDFont, int, Vector)} instead
      */
+    @Deprecated
     protected void showGlyph(Matrix textRenderingMatrix, PDFont font, int code,
         String unicode,
         Vector displacement) throws IOException
@@ -851,6 +852,7 @@ public abstract class PDFStreamEngine
      *
      * @deprecated use {@link #showFontGlyph(Matrix, PDFont, int, Vector)} instead
      */
+    @Deprecated
     protected void showFontGlyph(Matrix textRenderingMatrix, PDFont font, int code, String unicode,
         Vector displacement) throws IOException
     {
@@ -888,6 +890,7 @@ public abstract class PDFStreamEngine
      *
      * @deprecated use {@link #showType3Glyph(Matrix, PDType3Font, int, Vector)} instead
      */
+    @Deprecated
     protected void showType3Glyph(Matrix textRenderingMatrix, PDType3Font font, int code,
         String unicode, Vector displacement) throws IOException
     {

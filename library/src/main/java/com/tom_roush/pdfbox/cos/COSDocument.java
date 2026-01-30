@@ -27,7 +27,6 @@ import java.util.Map;
 
 import com.tom_roush.pdfbox.io.IOUtils;
 import com.tom_roush.pdfbox.io.ScratchFile;
-import com.tom_roush.pdfbox.multipdf.Splitter;
 import com.tom_roush.pdfbox.pdfparser.PDFObjectStreamParser;
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
 
@@ -368,6 +367,7 @@ public class COSDocument extends COSBase implements Closeable
      *
      * @deprecated use {@link PDDocument#getDocumentCatalog()} instead.
      */
+    @Deprecated
     public COSObject getCatalog() throws IOException
     {
         COSObject catalog = getObjectByType( COSName.CATALOG );
@@ -381,7 +381,7 @@ public class COSDocument extends COSBase implements Closeable
     /**
      * This will get a list of all available objects. This method works only for loaded PDFs. It
      * will return an empty list for PDFs created from scratch (this includes PDFs generated within
-     * PDFBox, e.g. by {@link Splitter}). This method will be removed in 3.0.
+     * PDFBox). This method will be removed in 3.0.
      *
      * @return A list of all objects, never null.
      */

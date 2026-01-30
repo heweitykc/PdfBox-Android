@@ -78,6 +78,7 @@ public class COSObjectKey implements Comparable<COSObjectKey>
      *
      * @deprecated will be removed in the next major release
      */
+    @Deprecated
     public void fixGeneration(int genNumber)
     {
         generation = genNumber;

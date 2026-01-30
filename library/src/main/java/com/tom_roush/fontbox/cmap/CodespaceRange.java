@@ -67,6 +67,7 @@ public class CodespaceRange
      *
      * @deprecated to be removed in the next major release.
      */
+    @Deprecated
     public CodespaceRange()
     {
     }
@@ -88,6 +89,7 @@ public class CodespaceRange
      *
      * @deprecated to be removed in the next major release
      */
+    @Deprecated
     public byte[] getEnd()
     {
         return endBytes;
@@ -100,6 +102,7 @@ public class CodespaceRange
      *
      * @deprecated to be removed in the next major release
      */
+    @Deprecated
     void setEnd(byte[] endBytes)
     {
         this.endBytes = endBytes;
@@ -117,6 +120,7 @@ public class CodespaceRange
      *
      * @deprecated to be removed in the next major release
      */
+    @Deprecated
     public byte[] getStart()
     {
         return startBytes;
@@ -129,6 +133,7 @@ public class CodespaceRange
      *
      * @deprecated to be removed in the next major release
      */
+    @Deprecated
     void setStart(byte[] startBytes)
     {
         this.startBytes = startBytes;

@@ -52,6 +52,7 @@ public abstract class COSNumber extends COSBase
      *
      * @deprecated will be removed in a future release
      */
+    @Deprecated
     public abstract double doubleValue();
 
     /**
