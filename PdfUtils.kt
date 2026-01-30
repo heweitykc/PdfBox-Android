@@ -143,40 +143,6 @@ object PdfUtils {
         return@withContext null
     }
 
-    private fun renderPdfToImages(document: PDDocument?, pageDpi: Int = 150): List<File> {
-        if (document == null) return emptyList()
-
-        val files = mutableListOf<File>()
-
-        // 遍历 PDDocument 中的每一页
-        for (i in 0 until document.numberOfPages) {
-            try {
-                // PDFBox 2.x 使用 PDFRenderer
-                val renderer = PDFRenderer(document)
-
-                // 使用特定的 DPI（例如 150 DPI）来控制生成图片的分辨率
-                val bitmap = renderer.renderImage(i, 1.5f)
-
-                // 创建临时文件
-                val tempFile = FileUtils.createCacheFile("${System.currentTimeMillis()}_${i}.jpg")
-
-                // 写入文件流
-                FileOutputStream(tempFile).use { out ->
-                    // 将 Bitmap 压缩为 JPEG 格式。压缩质量可以调整（0-100）
-                    // 这是一个将 Bitmap 数据从内存转移到磁盘的关键步骤。
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-                }
-
-                files.add(tempFile)
-
-            } catch (e: Exception) {
-                // 页面渲染失败处理
-                e.printStackTrace()
-            }
-        }
-        return files
-    }
-
     private fun saveDocument(document: PDDocument?, password: String): File {
         val cachePdf = FileUtils.createCacheFile("${System.currentTimeMillis()}.pdf")
 
